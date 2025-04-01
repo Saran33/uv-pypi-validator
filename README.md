@@ -1,4 +1,4 @@
-# Local PyPI Server
+# uv-pypi-validator
 
 This repository contains configurations and instructions for setting up and using a local PyPI server using [pypiserver](https://pypi.org/project/pypiserver/) to test package publishing and downloading with [uv](https://docs.astral.sh/uv/).
 
