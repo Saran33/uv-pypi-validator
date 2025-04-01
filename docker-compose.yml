@@ -1,0 +1,14 @@
+services:
+  pypiserver-authenticated:
+    image: pypiserver/pypiserver:latest
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./local-pypi/packages
+        target: /data/packages
+      - type: bind
+        source: ./local-pypi/htpasswd
+        target: /data/auth
+    command: run -P /data/auth/.htpasswd -a update,download,list /data/packages -v
+    ports:
+      - "8081:8080"
