@@ -30,7 +30,7 @@ pypi-server run -p ${PYINDEX_PORT} -P ./local-pypi/htpasswd/.htpasswd -a update,
 docker run -p ${PYINDEX_PORT}:8080 \
 -v ./local-pypi/packages:/data/packages \
 -v ./local-pypi/htpasswd:/data/auth \
-pypiserver/pypiserver:latest run -P /data/auth/.htpasswd -a update,download,list /data/packages
+pypiserver/pypiserver:latest run -P /data/auth/.htpasswd -a update,download,list /data/packages -v
 ```
 
 ## Using Docker Compose
@@ -47,7 +47,7 @@ docker compose up -d
 ```
 - Stop the pypiserver:
 ```bash
-docker compose down
+docker compose down -v
 ```
 
 - Access the server at:
@@ -76,6 +76,7 @@ uv publish \
 		--check-url http://${PYINDEX_HOST}:${PYINDEX_PORT}/simple/ \
 		-u ${PYINDEX_USER} \
 		-p ${PYINDEX_PASS} \
+		--no-cache \
 		dist/*
 ```
 
@@ -84,6 +85,7 @@ uv publish \
 - Install packages from your local PyPI server:
 ```bash
 uv pip install --index-url http://${PYINDEX_USER}:${PYINDEX_PASS}@${PYINDEX_HOST}:${PYINDEX_PORT}/simple/ "<your-package>" \
+	--no-cache
 	# --dry-run
 ```
 
