@@ -1,7 +1,11 @@
 services:
   pypiserver-authenticated:
-    image: pypiserver/pypiserver:latest
+    image: pypiserver/pypiserver:unstable
     restart: unless-stopped
+    environment:
+    # Set the maximum file upload size to 100MB, same as PyPI server
+    # https://github.com/pypiserver/pypiserver/issues/630
+      PYPISERVER_BOTTLE_MEMFILE_MAX_OVERRIDE_BYTES: 104857600
     volumes:
       - type: bind
         source: ./local-pypi/packages

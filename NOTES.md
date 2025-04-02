@@ -4,7 +4,7 @@
 - Install pypiserver using uv
 ```bash
 uv venv
-uv pip install pypiserver passlib
+uv pip install --resolution highest -U pypiserver passlib
 ```
 - Export env variables for authentication
 ```bash
@@ -12,6 +12,7 @@ export PYINDEX_HOST=localhost
 export PYINDEX_PORT=8081
 export PYINDEX_USER=<your-username>
 export PYINDEX_PASS=<your-password>
+export PYPISERVER_BOTTLE_MEMFILE_MAX_OVERRIDE_BYTES=104857600
 ```
 
 - Create directory for packages
@@ -22,7 +23,7 @@ htpasswd -sc ./local-pypi/htpasswd/.htpasswd ${PYINDEX_USER}
 ```
 - Run pypiserver
 ```bash
-pypi-server run -p ${PYINDEX_PORT} -P ./local-pypi/htpasswd/.htpasswd -a update,download,list ./local-pypi/packages -v
+uv run pypi-server run -p ${PYINDEX_PORT} -P ./local-pypi/htpasswd/.htpasswd -a update,download,list ./local-pypi/packages -v
 ```
 
 ## Using the Docker Image
